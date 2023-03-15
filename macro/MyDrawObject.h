@@ -46,6 +46,7 @@ public:
   void NCQScaling(int nq, float mass);
   void NCQUndo(int nq, float mass);
   void VnIntScaling(float vnInt);
+  void RemoveBigErrors(float ErrSigRatio, double xmin, double xmax);
 
   int GetNumberPadDraw(){ return this->fNumberPadDraw; }
   int GetSizeVector(){ return this->fAxisGraphX.size(); }

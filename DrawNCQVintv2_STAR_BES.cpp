@@ -57,9 +57,9 @@ void DrawNCQVintv2_STAR_BES(){
     Float_t size[]  =   {2., 2., 2.};
 
     Float_t AxisXmin = -0.1;
-    Float_t AxisXmax = 1.65;
+    Float_t AxisXmax = 1.64;
     Float_t AxisYmin = -0.29;
-    Float_t AxisYmax = 2.99;
+    Float_t AxisYmax = 1.99;
 
     std::vector<MyDrawObject *> drawOdj;
     int energyId = 0;
@@ -100,7 +100,7 @@ void DrawNCQVintv2_STAR_BES(){
       if (iEne==1) energyId = 2;
       if (iEne==2) energyId = 3;
       if (iEne==3) energyId = 4;
-        // if (iEne == 0) continue;
+        if (iEne == 0) continue;
         // if (iEne == 1) continue;
         // if (iEne == 2) continue;
         // if (iEne == 3) continue;
@@ -116,6 +116,7 @@ void DrawNCQVintv2_STAR_BES(){
             drawOdj.back()->SetDrawOdject((TGraphErrors*)fileIn1->Get( Form("gr_GeV%i_v2_values_%s%s_10_40",MaskEnergy_File1[iEne],MaskParticle_File1[pid].Data(),MaskChargeParticle_File1[0].Data()) ) );
             drawOdj.back()->NCQScaling(nq[pid],mass[pid]); // скейлинг точек ( (sqrt(pt^2+mass^2)-mass)/nq ; v2/nq )
             drawOdj.back()->VnIntScaling(v2int[energyId]); 
+            drawOdj.back()->RemoveBigErrors(0.05, 0.5, 2);
             
             // текст легенды
             drawOdj.back()->SetLegendText(Form("#font[42]{ #scale[1.0]{%s, %s}}",particle[pid].Data(),MaskEnergyTxt_File1[iEne].Data()));
@@ -130,6 +131,7 @@ void DrawNCQVintv2_STAR_BES(){
             drawOdj.back()->SetDrawOdject((TGraphErrors*)fileIn1->Get( Form("gr_GeV%i_v2_values_%s%s_10_40",MaskEnergy_File1[iEne],MaskParticle_File1[pid].Data(),MaskChargeParticle_File1[1].Data()) ) );
             drawOdj.back()->NCQScaling(nq[pid],mass[pid]); // скейлинг точек ( (sqrt(pt^2+mass^2)-mass)/nq ; v2/nq )
             drawOdj.back()->VnIntScaling(v2int[energyId]); 
+            drawOdj.back()->RemoveBigErrors(0.05, 0.5, 2);
         }
     }
 
@@ -260,8 +262,8 @@ void DrawNCQVintv2_STAR_BES(){
     canvas->SetTextInfo(Form("#font[42]{#scale[1.0]{ (m_{T}-m_{0})/n_{q} (GeV/c^{2}) }}"),"X", 1,0.3,0.5,0.5,0.0);
 
     canvas->SetTextInfo(Form("#font[42]{ #scale[1.0]{Au+Au Collisions (10-40%%)}}"),"Pad", 0, 0.1, 0.89*AxisYmax, 0.05, 0.0);
-    canvas->SetTextInfo(Form("#font[42]{ #scale[1.0]{Positive particles}}" ),"Pad", 0, 2.2, 0.05*AxisYmax, 0.05, 0.0);
-    canvas->SetTextInfo(Form("#font[42]{ #scale[1.0]{Negative particles}}" ),"Pad", 1, 2.2, 0.05*AxisYmax, 0.05, 0.0);
+    canvas->SetTextInfo(Form("#font[42]{ #scale[1.0]{Positive particles}}" ),"Pad", 0, 0.8, 0.05*AxisYmax, 0.05, 0.0);
+    canvas->SetTextInfo(Form("#font[42]{ #scale[1.0]{Negative particles}}" ),"Pad", 1, 0.8, 0.05*AxisYmax, 0.05, 0.0);
 
     canvas->SetTLineOnPad(AxisXmin, 0., AxisXmax, 0., 1, 3, 7, 0);
     canvas->SetTLineOnPad(AxisXmin, 0., AxisXmax, 0., 1, 3, 7, 1);

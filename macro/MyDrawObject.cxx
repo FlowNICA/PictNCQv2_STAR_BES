@@ -102,6 +102,32 @@ void MyDrawObject::VnIntScaling(float vnInt)
   }
 }
 
+void MyDrawObject::RemoveBigErrors(float ErrSigRatio, double xmin, double xmax)
+{
+  if(!fGraphErrors){
+    std::cout<<"Errors!!! Not Graph (fun vnInt)"<<std::endl;
+    return;
+  }else{
+    std::vector<double> newX, newY, newEX, newEY;
+    for(int i=0; i<(int)fAxisGraphX.size(); i++){
+      if (fAxisGraphYerror[i]/fAxisGraphY[i] > ErrSigRatio &&
+          fAxisGraphX[i] > xmin &&
+          fAxisGraphX[i] < xmax) continue;
+
+      newX.push_back( fAxisGraphX[i] );
+      newY.push_back( fAxisGraphY[i] );
+      newEX.push_back( fAxisGraphXerror[i] );
+      newEY.push_back( fAxisGraphYerror[i] );
+    }
+    fAxisGraphX = newX;
+    fAxisGraphY = newY;
+    fAxisGraphXerror = newEX;
+    fAxisGraphYerror = newEY;
+
+    MyDrawObject::SetGraph();
+  }
+}
+
 void MyDrawObject::SetDrawOdject(TF1 *tf1)
 {
   fFitFunction = tf1;

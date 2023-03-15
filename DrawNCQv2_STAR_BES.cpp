@@ -53,7 +53,7 @@ void DrawNCQv2_STAR_BES(){
     Float_t size[]  =   {2., 2., 2.};
 
     Float_t AxisXmin = -0.1;
-    Float_t AxisXmax = 1.65;
+    Float_t AxisXmax = 1.64;
     // Float_t AxisYmin = -0.039;
     Float_t AxisYmin = -0.014;
     Float_t AxisYmax = 0.105;
@@ -89,7 +89,7 @@ void DrawNCQv2_STAR_BES(){
 
     // Точки из первого файла BES-1, 7,11,14,19, требуется скейлинг
     for(Int_t iEne=0; iEne<4; iEne++){    
-        // if (iEne == 0) continue;
+        if (iEne == 0) continue;
         // if (iEne == 1) continue;
         // if (iEne == 2) continue;
         // if (iEne == 3) continue;
@@ -104,6 +104,7 @@ void DrawNCQv2_STAR_BES(){
             drawOdj.back()->SetNameGraph(Form("gr_GeV%i_v2_values_%s%s_10_40",MaskEnergy_File1[iEne],MaskParticle_File1[pid].Data(),MaskChargeParticle_File1[0].Data()));
             drawOdj.back()->SetDrawOdject((TGraphErrors*)fileIn1->Get( Form("gr_GeV%i_v2_values_%s%s_10_40",MaskEnergy_File1[iEne],MaskParticle_File1[pid].Data(),MaskChargeParticle_File1[0].Data()) ) );
             drawOdj.back()->NCQScaling(nq[pid],mass[pid]); // скейлинг точек ( (sqrt(pt^2+mass^2)-mass)/nq ; v2/nq )
+            drawOdj.back()->RemoveBigErrors(0.05, 0.5, 2);
             
             // текст легенды
             drawOdj.back()->SetLegendText(Form("#font[42]{ #scale[1.0]{%s, %s}}",particle[pid].Data(),MaskEnergyTxt_File1[iEne].Data()));
@@ -117,6 +118,7 @@ void DrawNCQv2_STAR_BES(){
             drawOdj.back()->SetNameGraph(Form("gr_GeV%i_v2_values_%s%s_10_40",MaskEnergy_File1[iEne],MaskParticle_File1[pid].Data(),MaskChargeParticle_File1[1].Data()));
             drawOdj.back()->SetDrawOdject((TGraphErrors*)fileIn1->Get( Form("gr_GeV%i_v2_values_%s%s_10_40",MaskEnergy_File1[iEne],MaskParticle_File1[pid].Data(),MaskChargeParticle_File1[1].Data()) ) );
             drawOdj.back()->NCQScaling(nq[pid],mass[pid]); // скейлинг точек ( (sqrt(pt^2+mass^2)-mass)/nq ; v2/nq )
+            drawOdj.back()->RemoveBigErrors(0.05, 0.5, 2);
         }
     }
 
